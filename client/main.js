@@ -30,7 +30,8 @@ function getUsers() {
         if (this.readyState == 4 && this.status == 200) {
             var users = JSON.parse(this.responseText);
             console.dir(users);
-
+            document.getElementById("para").innerHTML = users.data[0].name;
+            
             userCountElement = document.getElementById("user-count");
             userCountElement.innerHTML = users.length
         }
@@ -39,3 +40,4 @@ function getUsers() {
     xhttp.open("GET", "/users/", true);
     xhttp.send();
 }
+

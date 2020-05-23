@@ -57,7 +57,7 @@ func saveUserToKafka(User User) {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "newtest6"
+	topic := "newtest11"
 	for _, word := range []string{string(jsonString)} {
 		_, _, err := producer.SendMessage(&sarama.ProducerMessage{
 			Topic: topic,
