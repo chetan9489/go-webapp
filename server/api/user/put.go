@@ -9,7 +9,12 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// doPut updates a user in the db using the path '/users/id' and a JSON request body, eg: /users/2
+// updateUser godoc
+// @Summary Updates user based on given ID
+// @Produce json
+// @Param id path integer true "User ID"
+// @Success 200 {object} models.User
+// @Router /users/{id} [put]
 func updateUser(w http.ResponseWriter, r *http.Request) {
 	log.Info("Update User Endpoint Hit")
 

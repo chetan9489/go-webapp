@@ -34,11 +34,21 @@ func initialMigration() {
 	db.AutoMigrate(&User{})
 }
 
+// @title Glide WebApp
+// @version 1.0
+// @description WebApp to demonstrate my Glide Project.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.email chetanchauhan9822@gmail.com
+
+// @BasePath /users/
 func main() {
 	log.Info("Go ORM Tutorial")
 
 	// register static files handle '/index.html -> client/index.html'
 	http.Handle("/", http.FileServer(http.Dir("client")))
+
 	initialMigration()
 	go recieveUserFromKafka()
 	// register RESTful endpoint handler for '/users/'
@@ -87,6 +97,7 @@ func recieveUserFromKafka() {
 			log.Error(err)
 			continue
 		case msg := <-consumer.Messages():
+			log.Info("User received from Kakfa")
 			log.Info(string(msg.Value))
 			saveUserToDB(string(msg.Value))
 		case <-signals:

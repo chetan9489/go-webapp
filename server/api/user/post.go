@@ -8,6 +8,12 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// newUser godoc
+// @Summary Saves user on Kafka.
+// @Produce json
+// @Param object path User true "User"
+// @Success 200 {}
+// @Router /users/{User object} [post]
 func newUser(w http.ResponseWriter, r *http.Request) {
 	log.Info("New User Endpoint Hit")
 
@@ -32,6 +38,7 @@ func saveUserToKafka(User User) {
 	jsonObject, err := json.Marshal(User)
 
 	jsonString := string(jsonObject)
+	log.Info("User saved on Kafka")
 	log.Info(jsonString)
 
 	config := sarama.NewConfig()

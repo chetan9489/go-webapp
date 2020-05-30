@@ -1,16 +1,25 @@
 package user
 
 import (
+	"encoding/json"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
 
-// doDelete deletes a user from the db using the path '/users/id', eg: /users/2
+// deleteUser godoc
+// @Summary Deletes user from DB based on User ID.
+// @Produce json
+// @Param id path integer true "User ID"
+// @Success 200 {}
+// @Router /users/{id} [delete]
 func deleteUser(w http.ResponseWriter, r *http.Request) {
 	log.Info("Delete User Endpoint Hit")
+
+	query := r.URL.Query()
+	ID := query.Get("ID")
+	log.Info("Id : ", ID)
 
 	db, err := gorm.Open("postgres", connStr)
 	if err != nil {
@@ -18,12 +27,10 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	vars := mux.Vars(r)
-	email := vars["email"]
-
-	var user User
-	db.Where("Email = ?", email).Find(&user)
-	db.Delete(&user)
+	var users []User
+	json.NewEncoder(w).Encode(db.Where("ID = ?", ID).Find(&users))
+	log.Info(users)
+	db.Where("ID = ?", ID).Delete(&users)
 
 	log.Info("Successfully Deleted User")
 }
