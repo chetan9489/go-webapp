@@ -44,7 +44,7 @@ func initialMigration() {
 
 // @BasePath /users/
 func main() {
-	log.Info("Go ORM Tutorial")
+	log.Info("Starting GlideApp Server")
 
 	// register static files handle '/index.html -> client/index.html'
 	http.Handle("/", http.FileServer(http.Dir("client")))
@@ -53,7 +53,7 @@ func main() {
 	go recieveUserFromKafka()
 	// register RESTful endpoint handler for '/users/'
 	http.Handle("/users/", &user.UserAPI{})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 
 func recieveUserFromKafka() {
@@ -80,7 +80,7 @@ func recieveUserFromKafka() {
 		}
 	}()
 
-	topic := "newtest11"
+	topic := "newtest12"
 	// How to decide partition, is it fixed value...?
 	consumer, err := master.ConsumePartition(topic, 0, sarama.OffsetNewest)
 	if err != nil {

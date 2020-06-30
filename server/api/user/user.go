@@ -21,10 +21,6 @@ type User struct {
 	Password string `gorm:"not null"`
 }
 
-/* var db = []*User{}
-var nextUserID uint64
-var lock sync.Mutex */
-
 func (u *UserAPI) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 

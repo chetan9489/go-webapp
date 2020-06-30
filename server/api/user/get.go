@@ -25,10 +25,4 @@ func allUsers(w http.ResponseWriter, r *http.Request) {
 	var users []User
 	db.Find(&users)
 	json.NewEncoder(w).Encode(users)
-	/* u, _ := db.Model(&User{}).Find(&User{}).Rows()
-	for u.Next() {
-		user := new(User)
-		db.ScanRows(u, user)
-		fmt.Printf("Got: Name: %v, Username: %v\n", user.Name, user.Email)
-	} */
 }
